@@ -23,6 +23,42 @@ function updateStreak() {
     startDateElement.innerText = start.toDateString();
 }
 
+function updateWeekBar() {
+
+    let cleanDays = JSON.parse(
+        localStorage.getItem("cleanDays")
+    ) || {};
+
+    const today = new Date();
+
+    let monday = new Date(today);
+
+    let day = monday.getDay();
+
+    let offset = (day === 0 ? -6 : 1 - day);
+
+    monday.setDate(monday.getDate() + offset);
+
+    for (let i = 0; i < 7; i++) {
+
+        let current = new Date(monday);
+
+        current.setDate(monday.getDate() + i);
+
+        let dateString =
+            current.toISOString().split("T")[0];
+
+        let box =
+            document.getElementById("day" + i);
+
+        if (cleanDays[dateString]) {
+            box.innerHTML = "🔥";
+        } else {
+            box.innerHTML = "";
+        }
+    }
+}
+
 document.getElementById("startBtn").addEventListener("click", () => {
 
     localStorage.setItem(
@@ -48,7 +84,7 @@ document.getElementById("resetBtn").addEventListener("click", () => {
     alert("Streak Reset!");
 });
 
-updateStreak();
+
 
 document.getElementById("completeBtn").addEventListener("click", () => {
 
@@ -64,12 +100,15 @@ document.getElementById("completeBtn").addEventListener("click", () => {
         "cleanDays",
         JSON.stringify(cleanDays)
     );
-
+    updateWeekBar();
     alert("Today's status recorded!");
-
+    
 });
 
 if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("./sw.js")
         .then(() => console.log("Service Worker Registered"));
 }
+
+updateStreak();
+updateWeekBar();
