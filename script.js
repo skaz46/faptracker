@@ -25,9 +25,8 @@ function updateStreak() {
 
 function updateWeekBar() {
 
-    let cleanDays = JSON.parse(
-        localStorage.getItem("cleanDays")
-    ) || {};
+    let goonedDays =
+        JSON.parse(localStorage.getItem("goonedDays")) || {};
 
     const today = new Date();
 
@@ -51,13 +50,23 @@ function updateWeekBar() {
         let box =
             document.getElementById("day" + i);
 
-        if (cleanDays[dateString]) {
-            box.innerHTML = "🔥";
-        } else {
+        if (!box) continue;
+
+        if (current > today) {
+
             box.innerHTML = "";
+
+        } else if (goonedDays[dateString]) {
+
+            box.innerHTML = "❌";
+
+        } else {
+
+            box.innerHTML = "🔥";
+
         }
     }
-}
+}}
 
 document.getElementById("startBtn").addEventListener("click", () => {
 
@@ -107,6 +116,9 @@ document.getElementById("relapseBtn").addEventListener("click", () => {
     localStorage.removeItem("startDate");
 
     updateStreak();
-
+    updateWeekBar();
     alert("Streak reset.");
 });
+
+updateStreak();
+updateWeekBar();
