@@ -1,0 +1,20 @@
+{
+  "name": "Forge",
+  "short_name": "Forge",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#111111",
+  "theme_color": "#111111",
+  "icons": [
+    {
+      "src": "meditation-me.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "meditation-me.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
