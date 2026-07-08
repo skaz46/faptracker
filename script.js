@@ -111,6 +111,8 @@ function updateWeekBar() {
 
 document.getElementById("startBtn").addEventListener("click", () => {
 
+    console.log("START BUTTON CLICKED");
+
     if (!localStorage.getItem("firstStartDate")) {
 
         localStorage.setItem(
