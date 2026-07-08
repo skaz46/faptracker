@@ -111,8 +111,6 @@ function updateWeekBar() {
 
 document.getElementById("startBtn").addEventListener("click", () => {
 
-    console.log("START BUTTON CLICKED");
-
     if (!localStorage.getItem("firstStartDate")) {
 
         localStorage.setItem(
@@ -122,6 +120,7 @@ document.getElementById("startBtn").addEventListener("click", () => {
     }
 
     updateStreak();
+    updateWeekBar();
 
     alert("Journey Started!");
 });
