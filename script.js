@@ -52,7 +52,20 @@ updateStreak();
 
 document.getElementById("completeBtn").addEventListener("click", () => {
 
-    alert("Today's completion recorded!");
+    const today = new Date().toISOString().split("T")[0];
+
+    let cleanDays = JSON.parse(
+        localStorage.getItem("cleanDays")
+    ) || {};
+
+    cleanDays[today] = true;
+
+    localStorage.setItem(
+        "cleanDays",
+        JSON.stringify(cleanDays)
+    );
+
+    alert("Today's status recorded!");
 
 });
 
