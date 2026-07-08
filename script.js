@@ -88,27 +88,15 @@ document.getElementById("resetBtn").addEventListener("click", () => {
 
 document.getElementById("relapseBtn").addEventListener("click", () => {
 
-    if (!confirm("Are you sure you gooned today?")) {
+    if (!confirm("Are you sure you gooned today? This will reset your streak.")) {
         return;
     }
-
-    const today = new Date().toISOString().split("T")[0];
-
-    let goonedDays =
-        JSON.parse(localStorage.getItem("goonedDays")) || {};
-
-    goonedDays[today] = true;
-
-    localStorage.setItem(
-        "goonedDays",
-        JSON.stringify(goonedDays)
-    );
 
     localStorage.removeItem("startDate");
 
     updateStreak();
-    updateWeekBar();
 
+    alert("Streak reset.");
 });
 
 if ("serviceWorker" in navigator) {
