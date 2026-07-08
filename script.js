@@ -3,26 +3,48 @@ const startDateElement = document.getElementById("startDate");
 
 function updateStreak() {
 
-    const startDate = localStorage.getItem("startDate");
+    const firstStartDate =
+        localStorage.getItem("firstStartDate");
 
-    console.log("Stored date:", startDate);
+    if (!firstStartDate) {
 
-    if (!startDate) {
         streakElement.innerText = "0 Days";
         startDateElement.innerText = "Not Set";
         return;
     }
 
-    const start = new Date(startDate);
+    let goonedDays =
+        JSON.parse(localStorage.getItem("goonedDays")) || {};
+
+    let relapseDates =
+        Object.keys(goonedDays).sort();
+
+    let referenceDate;
+
+    if (relapseDates.length > 0) {
+
+        referenceDate =
+            new Date(relapseDates[relapseDates.length - 1]);
+
+    } else {
+
+        referenceDate =
+            new Date(firstStartDate);
+    }
+
     const today = new Date();
 
-    const diffTime = today - start;
-    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    const diffDays = Math.floor(
+        (today - referenceDate) /
+        (1000 * 60 * 60 * 24)
+    );
 
-    streakElement.innerText = diffDays + " Days";
-    startDateElement.innerText = start.toDateString();
+    streakElement.innerText =
+        diffDays + " Days";
+
+    startDateElement.innerText =
+        new Date(firstStartDate).toDateString();
 }
-
 function updateWeekBar() {
 
     const startDate = localStorage.getItem("startDate");
@@ -79,10 +101,13 @@ function updateWeekBar() {
 
 document.getElementById("startBtn").addEventListener("click", () => {
 
-    localStorage.setItem(
-        "startDate",
-        new Date().toISOString()
-    );
+    if (!localStorage.getItem("firstStartDate")) {
+
+        localStorage.setItem(
+            "firstStartDate",
+            new Date().toISOString()
+        );
+    }
 
     updateStreak();
 
@@ -122,7 +147,7 @@ document.getElementById("relapseBtn").addEventListener("click", () => {
         JSON.stringify(goonedDays)
     );
 
-    localStorage.removeItem("startDate");
+    //localStorage.removeItem("startDate");
 
     updateStreak();
     updateWeekBar();
