@@ -70,7 +70,7 @@ document.getElementById("startBtn").addEventListener("click", () => {
 
     alert("Journey Started!");
 });
-
+/*
 document.getElementById("resetBtn").addEventListener("click", () => {
 
     if (!confirm("Are you sure you want to reset your streak, King?")) {
@@ -83,7 +83,7 @@ document.getElementById("resetBtn").addEventListener("click", () => {
 
     alert("Streak Reset!");
 });
-
+*/
 
 
 document.getElementById("relapseBtn").addEventListener("click", () => {
