@@ -1,5 +1,7 @@
 const streakElement = document.getElementById("streak");
 const startDateElement = document.getElementById("startDate");
+const streakSinceElement =
+    document.getElementById("streakSince");
 
 function updateStreak() {
 
@@ -9,7 +11,11 @@ function updateStreak() {
     if (!firstStartDate) {
 
         streakElement.innerText = "0 Days";
+
         startDateElement.innerText = "Not Set";
+
+        streakSinceElement.innerText = "Not Set";
+
         return;
     }
 
@@ -19,23 +25,23 @@ function updateStreak() {
     let relapseDates =
         Object.keys(goonedDays).sort();
 
-    let referenceDate;
+    let streakStartDate;
 
     if (relapseDates.length > 0) {
 
-        referenceDate =
-            new Date(relapseDates[relapseDates.length - 1]);
+        streakStartDate =
+            relapseDates[relapseDates.length - 1];
 
     } else {
 
-        referenceDate =
-            new Date(firstStartDate);
+        streakStartDate =
+            firstStartDate.split("T")[0];
     }
 
     const today = new Date();
 
     const diffDays = Math.floor(
-        (today - referenceDate) /
+        (today - new Date(streakStartDate)) /
         (1000 * 60 * 60 * 24)
     );
 
@@ -44,7 +50,11 @@ function updateStreak() {
 
     startDateElement.innerText =
         new Date(firstStartDate).toDateString();
+
+    streakSinceElement.innerText =
+        new Date(streakStartDate).toDateString();
 }
+
 function updateWeekBar() {
 
     const startDate = localStorage.getItem("startDate");
