@@ -39,7 +39,8 @@ function updateStreak() {
     }
 
     const today = new Date();
-
+    
+    
     const diffDays = Math.floor(
         (today - new Date(streakStartDate)) /
         (1000 * 60 * 60 * 24)
@@ -64,7 +65,8 @@ function updateWeekBar() {
         JSON.parse(localStorage.getItem("goonedDays")) || {};
 
     const today = new Date();
-
+    today.setHours(0,0,0,0);
+    
     let monday = new Date(today);
 
     let day = monday.getDay();
@@ -76,9 +78,11 @@ function updateWeekBar() {
     for (let i = 0; i < 7; i++) {
 
         let current = new Date(monday);
+        
 
         current.setDate(monday.getDate() + i);
-
+        current.setHours(0,0,0,0);
+        
         let dateString =
             current.toISOString().split("T")[0];
 
@@ -87,10 +91,27 @@ function updateWeekBar() {
 
         if (!box) continue;
 
-        if (goonedDays[dateString]) {
+        if (current > today) {
+
+            box.innerHTML = "";
+
+        } else if (goonedDays[dateString]) {
 
             box.innerHTML = "❌";
 
+        } else if (firstStartDate) {
+
+            const startDay =
+                firstStartDate.split("T")[0];
+
+            if (dateString >= startDay) {
+
+                box.innerHTML = "🔥";
+
+            } else {
+
+                box.innerHTML = "";
+            }
         } else {
 
             box.innerHTML = "";
