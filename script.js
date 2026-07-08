@@ -61,58 +61,74 @@ function updateWeekBar() {
     const firstStartDate =
         localStorage.getItem("firstStartDate");
 
-    let goonedDays =
+    const goonedDays =
         JSON.parse(localStorage.getItem("goonedDays")) || {};
 
+    // Clear all boxes first
+    for (let i = 0; i < 7; i++) {
+
+        const box =
+            document.getElementById("day" + i);
+
+        if (box) {
+            box.innerHTML = "";
+        }
+    }
+
+    // If journey not started yet
+    if (!firstStartDate) {
+        return;
+    }
+
+    const startDay =
+        firstStartDate.split("T")[0];
+
     const today = new Date();
-    today.setHours(0,0,0,0);
-    
+
     let monday = new Date(today);
 
-    let day = monday.getDay();
+    const dayOfWeek = monday.getDay();
 
-    let offset = (day === 0 ? -6 : 1 - day);
+    const offset =
+        (dayOfWeek === 0) ? -6 : 1 - dayOfWeek;
 
     monday.setDate(monday.getDate() + offset);
 
     for (let i = 0; i < 7; i++) {
 
-        let current = new Date(monday);
-        
+        const current = new Date(monday);
 
         current.setDate(monday.getDate() + i);
-        current.setHours(0,0,0,0);
-        
-        let dateString =
+
+        const dateString =
             current.toISOString().split("T")[0];
 
-        let box =
+        const box =
             document.getElementById("day" + i);
 
         if (!box) continue;
 
-        if (current > today) {
+        // Future days stay blank
+        if (dateString >
+            today.toISOString().split("T")[0]) {
 
             box.innerHTML = "";
+        }
 
-        } else if (goonedDays[dateString]) {
+        // Relapse overrides everything
+        else if (goonedDays[dateString]) {
 
             box.innerHTML = "❌";
+        }
 
-        } else if (firstStartDate) {
+        // Clean day
+        else if (dateString >= startDay) {
 
-            const startDay =
-                firstStartDate.split("T")[0];
+            box.innerHTML = "🔥";
+        }
 
-            if (dateString >= startDay) {
-
-                box.innerHTML = "🔥";
-
-            } else {
-
-                box.innerHTML = "";
-            }
-        } else {
+        // Before journey started
+        else {
 
             box.innerHTML = "";
         }
