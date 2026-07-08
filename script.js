@@ -86,23 +86,27 @@ document.getElementById("resetBtn").addEventListener("click", () => {
 
 
 
-document.getElementById("completeBtn").addEventListener("click", () => {
+document.getElementById("relapseBtn").addEventListener("click", () => {
+
+    if (!confirm("Are you sure you gooned today? This will reset your streak.")) {
+        return;
+    }
 
     const today = new Date().toISOString().split("T")[0];
 
-    let cleanDays = JSON.parse(
-        localStorage.getItem("cleanDays")
-    ) || {};
+    let relapseDays =
+        JSON.parse(localStorage.getItem("relapseDays")) || {};
 
-    cleanDays[today] = true;
+    relapseDays[today] = true;
 
     localStorage.setItem(
-        "cleanDays",
-        JSON.stringify(cleanDays)
+        "relapseDays",
+        JSON.stringify(relapseDays)
     );
+
     updateWeekBar();
-    alert("Today's status recorded!");
-    
+    updateStreak();
+
 });
 
 if ("serviceWorker" in navigator) {
