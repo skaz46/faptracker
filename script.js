@@ -66,7 +66,7 @@ function updateWeekBar() {
 
         }
     }
-}}
+}
 
 document.getElementById("startBtn").addEventListener("click", () => {
 
