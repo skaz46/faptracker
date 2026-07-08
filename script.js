@@ -92,17 +92,21 @@ document.getElementById("relapseBtn").addEventListener("click", () => {
         return;
     }
 
+    const today = new Date().toISOString().split("T")[0];
+
+    let goonedDays =
+        JSON.parse(localStorage.getItem("goonedDays")) || {};
+
+    goonedDays[today] = true;
+
+    localStorage.setItem(
+        "goonedDays",
+        JSON.stringify(goonedDays)
+    );
+
     localStorage.removeItem("startDate");
 
     updateStreak();
 
     alert("Streak reset.");
 });
-
-if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("./sw.js")
-        .then(() => console.log("Service Worker Registered"));
-}
-
-updateStreak();
-updateWeekBar();
