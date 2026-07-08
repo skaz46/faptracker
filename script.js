@@ -88,24 +88,26 @@ document.getElementById("resetBtn").addEventListener("click", () => {
 
 document.getElementById("relapseBtn").addEventListener("click", () => {
 
-    if (!confirm("Are you sure you gooned today? This will reset your streak.")) {
+    if (!confirm("Are you sure you gooned today?")) {
         return;
     }
 
     const today = new Date().toISOString().split("T")[0];
 
-    let relapseDays =
-        JSON.parse(localStorage.getItem("relapseDays")) || {};
+    let goonedDays =
+        JSON.parse(localStorage.getItem("goonedDays")) || {};
 
-    relapseDays[today] = true;
+    goonedDays[today] = true;
 
     localStorage.setItem(
-        "relapseDays",
-        JSON.stringify(relapseDays)
+        "goonedDays",
+        JSON.stringify(goonedDays)
     );
 
-    updateWeekBar();
+    localStorage.removeItem("startDate");
+
     updateStreak();
+    updateWeekBar();
 
 });
 
