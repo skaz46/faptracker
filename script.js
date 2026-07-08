@@ -57,7 +57,8 @@ function updateStreak() {
 
 function updateWeekBar() {
 
-    const startDate = localStorage.getItem("startDate");
+    const firstStartDate =
+        localStorage.getItem("firstStartDate");
 
     let goonedDays =
         JSON.parse(localStorage.getItem("goonedDays")) || {};
@@ -86,25 +87,13 @@ function updateWeekBar() {
 
         if (!box) continue;
 
-        if (current > today) {
-
-            box.innerHTML = "";
-
-        } else if (goonedDays[dateString]) {
+        if (goonedDays[dateString]) {
 
             box.innerHTML = "❌";
-
-        } else if (
-            startDate &&
-            current >= new Date(startDate)
-        ) {
-
-            box.innerHTML = "🔥";
 
         } else {
 
             box.innerHTML = "";
-
         }
     }
 }
