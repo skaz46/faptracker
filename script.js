@@ -37,10 +37,11 @@ document.getElementById("startBtn").addEventListener("click", () => {
 
 document.getElementById("resetBtn").addEventListener("click", () => {
 
-    localStorage.setItem(
-        "startDate",
-        new Date().toISOString()
-    );
+    if (!confirm("Are you sure you want to reset your streak, King?")) {
+        return;
+    }
+
+    localStorage.removeItem("startDate");
 
     updateStreak();
 
