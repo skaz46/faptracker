@@ -50,6 +50,12 @@ document.getElementById("resetBtn").addEventListener("click", () => {
 
 updateStreak();
 
+document.getElementById("completeBtn").addEventListener("click", () => {
+
+    alert("Today's completion recorded!");
+
+});
+
 if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("./sw.js")
         .then(() => console.log("Service Worker Registered"));
