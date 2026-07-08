@@ -153,7 +153,8 @@ document.getElementById("relapseBtn").addEventListener("click", () => {
         JSON.parse(localStorage.getItem("goonedDays")) || {};
 
     goonedDays[today] = true;
-
+    console.log(goonedDays);
+    
     localStorage.setItem(
         "goonedDays",
         JSON.stringify(goonedDays)
